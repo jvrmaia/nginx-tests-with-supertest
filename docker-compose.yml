@@ -1,0 +1,41 @@
+version: '3.2'
+
+services:
+  gateway:
+    hostname: gateway
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    depends_on:
+      - echo
+    links:
+      - echo
+    ports:
+      - 8080:80
+    networks:
+      - fake-vpc
+
+  echo:
+    hostname: echo
+    image: hashicorp/http-echo
+    command: -listen=:3000 -text="hello world"
+    ports:
+      - 3000:3000
+    networks:
+      - fake-vpc
+
+  test-runner:
+    build:
+      context: ./tests
+      dockerfile: Dockerfile
+    environment:
+      - GATEWAY_HOST=gateway
+    depends_on:
+      - gateway
+    links:
+      - gateway
+    networks:
+      - fake-vpc
+
+networks:
+  fake-vpc:

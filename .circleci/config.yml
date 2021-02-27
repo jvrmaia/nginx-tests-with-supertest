@@ -1,0 +1,18 @@
+version: 2.1
+
+jobs:
+    build:
+        machine: true
+        steps:
+            - checkout
+
+            - run:
+                name: Dockerfile lint 'gateway'
+                command:
+                    docker run --rm -i hadolint/hadolint < ./gateway/Dockerfile
+
+            - run:
+                name: Test 'gateway' image
+                command: |
+                    docker-compose up -d echo gateway
+                    docker-compose up test-runner

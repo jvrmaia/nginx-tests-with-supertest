@@ -1,0 +1,16 @@
+{
+  "name": "tests",
+  "version": "1.0.0",
+  "description": "NGINX tests",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha ."
+  },
+  "author": "João Maia",
+  "license": "MIT",
+  "dependencies": {
+    "mocha": "^7.1.0",
+    "supertest": "^4.0.2",
+    "minimist": ">=1.2.2"
+  }
+}
